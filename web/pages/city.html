@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D虚拟城市 - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <!-- 高科技背景 -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index.html" class="back-button">← 返回主页</a>
+        </div>
+        
+        <!-- 页面标题区域 -->
+        <div class="page-header" style="text-align: center; margin-bottom: 60px;">
+            <div class="tech-badge">
+                <div class="badge-glow"></div>
+                <span class="badge-text">🏙️ 3D CITY VISUALIZATION MODULE</span>
+            </div>
+            <h1 style="margin: 30px 0 20px;">3D虚拟城市</h1>
+            <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.8); max-width: 800px; margin: 0 auto;">
+                沉浸式太阳能朋克城市三维建模与实时渲染系统
+            </p>
+        </div>
+
+        <!-- 主要内容区域 - 左右布局 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+        
+        <!-- 左侧：控制面板 -->
+        <div class="tech-module city-module">
+            <div class="module-header">
+                <div class="module-icon">🏗️</div>
+                <div class="module-title">城市参数控制</div>
+                <div class="module-subtitle">City Generation Parameters</div>
+            </div>
+            
+            <div class="module-content">
+                <!-- 城市生成参数 -->
+                <div class="input-group">
+                    <label for="seed">随机种子 (Random Seed)</label>
+                    <input type="number" id="seed" value="42" min="1" max="1000" class="tech-input">
+                </div>
+                
+                <div class="input-group">
+                    <label for="grid">网格大小 (Grid Size)</label>
+                    <input type="number" id="grid" value="6" min="3" max="12" class="tech-input">
+                </div>
+                
+                <div class="input-group">
+                    <label for="maxH">最大高度 (Max Height)</label>
+                    <input type="number" id="maxH" value="16" min="5" max="30" class="tech-input">
+                </div>
+                
+                <button onclick="generateCity()" class="tech-button city-button">
+                    <span class="button-text">🚀 生成城市</span>
+                </button>
+                
+                <!-- 相机控制 -->
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #4caf50; margin-bottom: 15px;">📷 相机控制</h3>
+                    <button onclick="toggleAutoRotate()" class="tech-button city-button" style="margin-bottom: 10px;">
+                        <span class="button-text" id="rotateText">🔄 开启自动旋转</span>
+                    </button>
+                    <button onclick="resetCamera()" class="tech-button city-button">
+                        <span class="button-text">🎯 重置视角</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧：3D视窗 -->
+        <div class="tech-module city-module">
+            <div class="module-header">
+                <div class="module-icon">🌆</div>
+                <div class="module-title">3D城市视窗</div>
+                <div class="module-subtitle">Real-time 3D City Rendering</div>
+            </div>
+            
+            <div class="module-content" style="padding: 0; height: 500px; position: relative;">
+                <!-- 3D视窗容器 -->
+                <div id="viewport" style="width: 100%; height: 100%; background: #000; border-radius: 15px; overflow: hidden; position: relative;">
+                    <div id="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #4caf50; font-size: 1.2rem; z-index: 1000; text-align: center;">
+                        <div style="width: 40px; height: 40px; border: 4px solid rgba(76, 175, 80, 0.3); border-top: 4px solid #4caf50; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                        <p style="font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;">🌱 正在初始化3D引擎</p>
+                        <p style="font-size: 0.9rem; color: #81c784;">WebGL渲染器启动中...</p>
+                    </div>
+                    <canvas id="cityCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <!-- 性能监控面板 -->
+        <div class="tech-module city-module" style="margin-bottom: 40px;">
+            <div class="module-header">
+                <div class="module-icon">📊</div>
+                <div class="module-title">实时性能监控</div>
+                <div class="module-subtitle">Real-time Performance Statistics</div>
+            </div>
+            
+            <div class="module-content">
+                <div class="tech-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">FPS</span>
+                        <span class="spec-value" id="fps-counter">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">建筑数量</span>
+                        <span class="spec-value" id="building-count">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">三角形</span>
+                        <span class="spec-value" id="triangle-count">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">状态</span>
+                        <span class="spec-value" id="render-status">初始化中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 控制说明 -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-bottom: 40px;">
+            <div class="tech-module city-module">
+                <div class="module-header">
+                    <div class="module-icon">🖱️</div>
+                    <div class="module-title">交互控制</div>
+                    <div class="module-subtitle">Interactive Controls</div>
+                </div>
+                <div class="module-content">
+                    <div style="line-height: 1.8; color: #81c784;">
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 鼠标拖拽：360°旋转视角
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 滚轮缩放：远近视图切换
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #4caf50;">
+                            • 自动旋转：沉浸式体验
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tech-module city-module">
+                <div class="module-header">
+                    <div class="module-icon">🌱</div>
+                    <div class="module-title">可持续元素</div>
+                    <div class="module-subtitle">Sustainable Features</div>
+                </div>
+                <div class="module-content">
+                    <div style="line-height: 1.8; color: #81c784;">
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 绿色屋顶花园系统
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 太阳能电池板阵列
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 微型风力发电机
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #4caf50;">
+                            • 垂直绿化立体系统
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let scene, camera, renderer, controls;
+        let cityData = { buildings: [], stats: { fps: 0, buildings: 0, triangles: 0 } };
+        let autoRotate = false;
+        let animationId;
+        
+        // 检查WebGL支持
+        function checkWebGLSupport() {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                return !!gl;
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            loading.innerHTML = `
+                <div style="color: #f44336; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">❌</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 15px;">${message}</div>
+                    <div style="font-size: 0.9rem; color: #ccc; line-height: 1.6;">
+                        请尝试：<br>
+                        • 更新浏览器到最新版本<br>
+                        • 启用硬件加速<br>
+                        • 检查显卡驱动程序
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 初始化3D场景
+        function init3DScene() {
+            try {
+                // 检查WebGL支持
+                if (!checkWebGLSupport()) {
+                    throw new Error('浏览器不支持WebGL');
+                }
+                
+                const viewport = document.getElementById('viewport');
+                const canvas = document.getElementById('cityCanvas');
+                
+                // 创建场景
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x0a0a0a);
+                scene.fog = new THREE.Fog(0x0a0a0a, 50, 200);
+                
+                // 创建相机
+                camera = new THREE.PerspectiveCamera(
+                    75, 
+                    viewport.clientWidth / viewport.clientHeight, 
+                    0.1, 
+                    1000
+                );
+                camera.position.set(30, 25, 30);
+                
+                // 创建渲染器
+                renderer = new THREE.WebGLRenderer({ 
+                    canvas: canvas,
+                    antialias: true,
+                    alpha: true 
+                });
+                renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFShadowMap;
+                renderer.outputEncoding = THREE.sRGBEncoding;
+                
+                // 创建控制器
+                controls = new THREE.OrbitControls(camera, canvas);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.maxPolarAngle = Math.PI / 2;
+                controls.minDistance = 10;
+                controls.maxDistance = 100;
+                
+                // 添加光照
+                setupLighting();
+                
+                // 创建地面
+                createGround();
+                
+                // 隐藏加载提示
+                document.getElementById('loading').style.display = 'none';
+                
+                // 生成初始城市
+                generateCity();
+                
+                // 开始渲染循环
+                startRenderLoop();
+                
+                // 处理窗口大小变化
+                window.addEventListener('resize', onWindowResize);
+                
+                console.log('✅ 3D渲染引擎初始化成功');
+                updateStatus('运行中');
+                
+            } catch (error) {
+                console.error('❌ 3D渲染引擎初始化失败:', error);
+                showError('渲染引擎初始化失败<br>请检查浏览器WebGL支持');
+                updateStatus('初始化失败');
+            }
+        }
+        
+        // 设置光照
+        function setupLighting() {
+            // 环境光
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+            
+            // 方向光（太阳光）
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            directionalLight.position.set(50, 50, 25);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 0.5;
+            directionalLight.shadow.camera.far = 200;
+            directionalLight.shadow.camera.left = -50;
+            directionalLight.shadow.camera.right = 50;
+            directionalLight.shadow.camera.top = 50;
+            directionalLight.shadow.camera.bottom = -50;
+            scene.add(directionalLight);
+            
+            // 补充光源
+            const fillLight = new THREE.DirectionalLight(0x87ceeb, 0.4);
+            fillLight.position.set(-25, 20, -25);
+            scene.add(fillLight);
+        }
+        
+        // 创建地面
+        function createGround() {
+            const groundGeometry = new THREE.PlaneGeometry(100, 100);
+            const groundMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x1a237e,
+                transparent: true,
+                opacity: 0.8
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+        }
+        
+        // 生成城市
+        function generateCity() {
+            try {
+                updateStatus('生成城市中...');
+                
+                // 清除现有建筑
+                clearBuildings();
+                
+                // 获取参数
+                const seed = parseInt(document.getElementById('seed').value) || 42;
+                const gridSize = parseInt(document.getElementById('grid').value) || 6;
+                const maxHeight = parseInt(document.getElementById('maxH').value) || 16;
+                
+                // 设置随机种子
+                Math.seedrandom = function(seed) {
+                    let m = 0x80000000;
+                    let a = 1103515245;
+                    let c = 12345;
+                    let state = seed ? seed : Math.floor(Math.random() * (m - 1));
+                    
+                    return function() {
+                        state = (a * state + c) % m;
+                        return state / (m - 1);
+                    };
+                };
+                
+                const random = Math.seedrandom(seed);
+                
+                // 生成建筑
+                const buildings = [];
+                const spacing = 8;
+                const offset = (gridSize - 1) * spacing / 2;
+                
+                for (let x = 0; x < gridSize; x++) {
+                    for (let z = 0; z < gridSize; z++) {
+                        if (random() > 0.3) { // 70%概率生成建筑
+                            const building = createBuilding(
+                                x * spacing - offset,
+                                z * spacing - offset,
+                                2 + random() * (maxHeight - 2),
+                                random
+                            );
+                            buildings.push(building);
+                            scene.add(building);
+                        }
+                    }
+                }
+                
+                cityData.buildings = buildings;
+                cityData.stats.buildings = buildings.length;
+                
+                updateStats();
+                updateStatus('生成完成');
+                
+                console.log(`🏗️ 城市生成完成: ${buildings.length} 栋建筑`);
+                
+            } catch (error) {
+                console.error('❌ 城市生成失败:', error);
+                updateStatus('生成失败');
+            }
+        }
+        
+        // 创建建筑
+        function createBuilding(x, z, height, random) {
+            const width = 2 + random() * 2;
+            const depth = 2 + random() * 2;
+            
+            const geometry = new THREE.BoxGeometry(width, height, depth);
+            
+            // 随机材质
+            let material;
+            const materialType = random();
+            
+            if (materialType < 0.3) {
+                // 玻璃建筑
+                material = new THREE.MeshPhysicalMaterial({
+                    color: 0x88ccff,
+                    transparent: true,
+                    opacity: 0.7,
+                    roughness: 0.1,
+                    metalness: 0.1
+                });
+            } else if (materialType < 0.6) {
+                // 混凝土建筑
+                material = new THREE.MeshLambertMaterial({
+                    color: new THREE.Color().setHSL(0.6, 0.3, 0.4 + random() * 0.3)
+                });
+            } else {
+                // 发光建筑
+                material = new THREE.MeshStandardMaterial({
+                    color: 0x4caf50,
+                    emissive: 0x002200,
+                    emissiveIntensity: 0.2
+                });
+            }
+            
+            const building = new THREE.Mesh(geometry, material);
+            building.position.set(x, height / 2, z);
+            building.castShadow = true;
+            building.receiveShadow = true;
+            
+            return building;
+        }
+        
+        // 清除建筑
+        function clearBuildings() {
+            cityData.buildings.forEach(building => {
+                scene.remove(building);
+                building.geometry.dispose();
+                building.material.dispose();
+            });
+            cityData.buildings = [];
+        }
+        
+        // 开始渲染循环
+        function startRenderLoop() {
+            let lastTime = performance.now();
+            let frameCount = 0;
+            
+            function animate() {
+                animationId = requestAnimationFrame(animate);
+                
+                const currentTime = performance.now();
+                frameCount++;
+                
+                // 每秒更新一次FPS
+                if (currentTime - lastTime >= 1000) {
+                    cityData.stats.fps = Math.round(frameCount * 1000 / (currentTime - lastTime));
+                    frameCount = 0;
+                    lastTime = currentTime;
+                    updateStats();
+                }
+                
+                controls.update();
+                
+                if (autoRotate) {
+                    controls.autoRotate = true;
+                    controls.autoRotateSpeed = 2.0;
+                } else {
+                    controls.autoRotate = false;
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        }
+        
+        // 窗口大小变化处理
+        function onWindowResize() {
+            const viewport = document.getElementById('viewport');
+            camera.aspect = viewport.clientWidth / viewport.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+        }
+        
+        // 切换自动旋转
+        function toggleAutoRotate() {
+            autoRotate = !autoRotate;
+            const rotateText = document.getElementById('rotateText');
+            rotateText.textContent = autoRotate ? '⏸️ 停止旋转' : '🔄 开启自动旋转';
+        }
+        
+        // 重置相机
+        function resetCamera() {
+            camera.position.set(30, 25, 30);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            document.getElementById('fps-counter').textContent = cityData.stats.fps;
+            document.getElementById('building-count').textContent = cityData.stats.buildings;
+            
+            // 计算三角形数量
+            let triangles = 0;
+            cityData.buildings.forEach(building => {
+                if (building.geometry) {
+                    triangles += building.geometry.attributes.position.count / 3;
+                }
+            });
+            cityData.stats.triangles = Math.round(triangles);
+            document.getElementById('triangle-count').textContent = cityData.stats.triangles;
+        }
+        
+        // 更新状态
+        function updateStatus(status) {
+            document.getElementById('render-status').textContent = status;
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', () => {
+            setTimeout(init3DScene, 100); // 延迟100ms确保DOM完全加载
+        });
+        
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', () => {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            clearBuildings();
+        });
+    </script>
+</body>
+</html>

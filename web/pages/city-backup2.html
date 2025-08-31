@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D虚拟城市 - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/FXAAShader.js"></script>
+    <script src="../js/advanced-city-renderer.js"></script>
+    <script src="../js/enhanced-city-renderer.js"></script>
+    <script src="../js/visual-enhanced-renderer.js"></script>
+</head>
+<body>
+    <!-- 高科技背景 -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index.html" class="back-button">← 返回主页</a>
+        </div>
+        
+        <!-- 页面标题区域 -->
+        <div class="page-header" style="text-align: center; margin-bottom: 60px;">
+            <div class="tech-badge">
+                <div class="badge-glow"></div>
+                <span class="badge-text">🏙️ 3D CITY VISUALIZATION MODULE</span>
+            </div>
+            <h1 style="margin: 30px 0 20px;">3D虚拟城市</h1>
+            <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.8); max-width: 800px; margin: 0 auto;">
+                沉浸式太阳能朋克城市三维建模与实时渲染系统
+            </p>
+        </div>
+
+        <!-- 主要内容区域 - 左右布局 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+        
+        <!-- 左侧：控制面板 -->
+        <div class="tech-module city-module">
+            <div class="module-header">
+                <div class="module-status-bar">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">PARAMETERS CONFIG</span>
+                </div>
+                <div class="module-id">CTRL_PANEL</div>
+            </div>
+            
+            <div class="module-icon-container">
+                <div class="icon-background city-bg"></div>
+                <div class="module-icon">⚙️</div>
+                <div class="icon-pulse city-pulse"></div>
+            </div>
+            
+            <div class="module-info">
+                <h3 class="module-name">城市生成参数配置</h3>
+                <p class="module-description">调整参数实时生成不同风格的太阳能朋克城市</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 30px 0;">
+                <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #4caf50; font-size: 1rem; letter-spacing: 1px;">
+                        🎲 随机种子
+                    </label>
+                    <input id="seed" type="number" value="42" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(76, 175, 80, 0.4); border-radius: 10px; background: rgba(76, 175, 80, 0.05); color: white;">
+                    <small style="color: #81c784; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        相同种子生成相同城市布局
+                    </small>
+                </div>
+                
+                <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #4caf50; font-size: 1rem; letter-spacing: 1px;">
+                        🏗️ 城市网格
+                    </label>
+                    <input id="grid" type="number" value="6" min="2" max="12" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(76, 175, 80, 0.4); border-radius: 10px; background: rgba(76, 175, 80, 0.05); color: white;">
+                    <small style="color: #81c784; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        数值越大城市越密集
+                    </small>
+                </div>
+                
+                <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #4caf50; font-size: 1rem; letter-spacing: 1px;">
+                        🏢 最大高度
+                    </label>
+                    <input id="maxH" type="number" value="16" min="4" max="50" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(76, 175, 80, 0.4); border-radius: 10px; background: rgba(76, 175, 80, 0.05); color: white;">
+                    <small style="color: #81c784; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        控制天际线高度
+                    </small>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px;">
+                <button id="genBtn" class="tech-button city-button" style="padding: 18px 25px; font-size: 1.1rem;">
+                    <span class="button-text">🚀 重新生成城市</span>
+                    <div class="button-arrow">→</div>
+                    <div class="button-glow"></div>
+                </button>
+                <button onclick="toggleAutoRotate()" class="tech-button city-button" style="padding: 18px 25px; font-size: 1.1rem;">
+                    <span class="button-text">🔄 切换旋转</span>
+                    <div class="button-arrow">→</div>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <button onclick="resetCamera()" class="tech-button city-button" style="padding: 15px 20px; font-size: 1rem;">
+                    <span class="button-text">📷 重置视角</span>
+                </button>
+                <button onclick="exportCityData()" class="tech-button city-button" style="padding: 15px 20px; font-size: 1rem;">
+                    <span class="button-text">💾 导出数据</span>
+                </button>
+            </div>
+            
+            <!-- 优化控制面板 -->
+            <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 20px; margin-top: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="font-size: 1.5rem; margin-right: 10px;">⚙️</div>
+                    <strong style="font-size: 1.1rem; color: #4caf50;">优化控制</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button onclick="toggleLOD()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">🎯 LOD系统</span>
+                    </button>
+                    <button onclick="toggleMerging()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">🔗 几何合并</span>
+                    </button>
+                    <button onclick="toggleAdaptive()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">📈 自适应</span>
+                    </button>
+                    <button onclick="forceOptimize()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">⚡ 强制优化</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 视觉效果控制面板 -->
+            <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 20px; margin-top: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="font-size: 1.5rem; margin-right: 10px;">✨</div>
+                    <strong style="font-size: 1.1rem; color: #4caf50;">视觉效果</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button onclick="toggleBloom()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">🌟 辉光效果</span>
+                    </button>
+                    <button onclick="toggleParticles()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">✨ 粒子效果</span>
+                    </button>
+                    <button onclick="cycleMaterials()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">🎨 材质切换</span>
+                    </button>
+                    <button onclick="toggleDynamicLights()" class="tech-button city-button" style="padding: 10px 15px; font-size: 0.9rem;">
+                        <span class="button-text">💡 动态光照</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧：3D视窗 -->
+        <div class="tech-module city-module">
+            <div class="module-header">
+                <div class="module-status-bar">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">3D ENGINE ACTIVE</span>
+                </div>
+                <div class="module-id">VIEWPORT</div>
+            </div>
+            
+            <div class="module-icon-container">
+                <div class="icon-background city-bg"></div>
+                <div class="module-icon">🌆</div>
+                <div class="icon-pulse city-pulse"></div>
+            </div>
+            
+            <div class="module-info">
+                <h3 class="module-name">3D城市实时预览</h3>
+                <p class="module-description">Three.js驱动的沉浸式城市可视化体验</p>
+            </div>
+            
+            <div id="viewport" style="height: 70vh; border-radius: 15px; overflow: hidden; 
+                 background: linear-gradient(135deg, #0a0e27 0%, #1a237e 50%, #000051 100%); 
+                 border: 3px solid rgba(76, 175, 80, 0.4); position: relative; margin: 30px 0;
+                 box-shadow: 0 15px 40px rgba(76, 175, 80, 0.2), inset 0 0 30px rgba(0, 229, 255, 0.1);">
+                
+                <!-- 加载提示 -->
+                <div id="loading-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                     background: rgba(10, 14, 39, 0.95); display: flex; align-items: center; justify-content: center; 
+                     z-index: 10; backdrop-filter: blur(10px);">
+                    <div style="text-align: center; color: #4caf50;">
+                        <div style="width: 60px; height: 60px; border: 4px solid rgba(76, 175, 80, 0.3); 
+                             border-top: 4px solid #4caf50; border-radius: 50%; animation: spin 1s linear infinite; 
+                             margin: 0 auto 20px;"></div>
+                        <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">🌱 正在生成太阳能朋克城市</p>
+                        <p style="font-size: 1rem; color: #81c784;">Advanced 3D引擎启动中...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技术规格 -->
+            <div class="tech-specs">
+                <div class="spec-item">
+                    <span class="spec-label">ENGINE</span>
+                    <span class="spec-value">Enhanced</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">FPS</span>
+                    <span class="spec-value" id="fps-counter">60</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">MODELS</span>
+                    <span class="spec-value" id="model-count">0</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">TRIANGLES</span>
+                    <span class="spec-value" id="triangle-count">0</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">QUALITY</span>
+                    <span class="spec-value" id="quality-level">AUTO</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">MEMORY</span>
+                    <span class="spec-value" id="memory-usage">0MB</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">CULLED</span>
+                    <span class="spec-value" id="culled-count">0</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">VISIBLE</span>
+                    <span class="spec-value" id="visible-count">0</span>
+                </div>
+            </div>
+            
+            <!-- 性能监控面板 -->
+            <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 20px; margin-top: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="font-size: 1.5rem; margin-right: 10px;">📊</div>
+                    <strong style="font-size: 1.1rem; color: #4caf50;">实时性能监控</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                    <div>帧时间: <span id="frame-time" style="color: #81c784;">0ms</span></div>
+                    <div>绘制调用: <span id="draw-calls" style="color: #81c784;">0</span></div>
+                    <div>顶点数: <span id="vertex-count" style="color: #81c784;">0</span></div>
+                    <div>自适应质量: <span id="adaptive-quality" style="color: #81c784;">100%</span></div>
+                </div>
+            </div>
+            
+            <!-- 控制说明 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
+                <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 25px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 2.5rem; margin-right: 15px;">🖱️</div>
+                        <strong style="font-size: 1.3rem; color: #4caf50; letter-spacing: 1px;">交互控制</strong>
+                    </div>
+                    <div style="line-height: 1.8; color: #81c784;">
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 鼠标拖拽：360°旋转视角
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 滚轮缩放：远近视图切换
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #4caf50;">
+                            • 自动旋转：沉浸式体验
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(76, 175, 80, 0.1); border: 2px solid rgba(76, 175, 80, 0.3); border-radius: 15px; padding: 25px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 2.5rem; margin-right: 15px;">🌱</div>
+                        <strong style="font-size: 1.3rem; color: #4caf50; letter-spacing: 1px;">可持续元素</strong>
+                    </div>
+                    <div style="line-height: 1.8; color: #81c784;">
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 绿色屋顶花园系统
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 太阳能电池板阵列
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4caf50;">
+                            • 微型风力发电机
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #4caf50;">
+                            • 垂直绿化立体系统
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div> <!-- 结束左右布局容器 -->
+    </div>
+
+    <script>
+        // 高性能城市渲染器实例
+        let cityRenderer = null;
+        let statsUpdateInterval = null;
+        
+        // 初始化高级渲染引擎
+        function initAdvancedRenderer() {
+            try {
+                const viewport = document.getElementById('viewport');
+                if (typeof AdvancedCityRenderer === 'undefined') {
+                    throw new Error('AdvancedCityRenderer not loaded');
+                }
+                
+                cityRenderer = new VisualEnhancedRenderer(viewport);
+                
+                // 显示性能等级
+                const qualityElement = document.getElementById('quality-level');
+                if (qualityElement) {
+                    qualityElement.textContent = cityRenderer.performanceLevel.toUpperCase();
+                }
+                
+                // 生成初始城市
+                generateAdvancedCity();
+                
+                // 启动统计信息更新
+                startStatsUpdate();
+                
+                console.log('🚀 Advanced City Renderer initialized successfully!');
+                return true;
+            } catch (error) {
+                console.error('Failed to initialize Advanced City Renderer:', error);
+                return false;
+            }
+        }
+        
+        // 生成高级城市
+        function generateAdvancedCity() {
+            if (!cityRenderer) return;
+            
+            const params = {
+                seed: parseInt(document.getElementById('seed').value) || 42,
+                gridSize: parseInt(document.getElementById('grid').value) || 6,
+                maxHeight: parseInt(document.getElementById('maxH').value) || 16,
+                density: 0.7
+            };
+            
+            cityRenderer.generateCity(params);
+            updateDisplayStats();
+        }
+        
+        // 更新显示统计信息
+        function updateDisplayStats() {
+            if (!cityRenderer) return;
+            
+            const stats = cityRenderer.getVisualStats ? cityRenderer.getVisualStats() : cityRenderer.getEnhancedStats();
+            
+            // 基础统计
+            const modelCountElement = document.getElementById('model-count');
+            if (modelCountElement) {
+                modelCountElement.textContent = stats.geometries.toLocaleString();
+            }
+            
+            const triangleCountElement = document.getElementById('triangle-count');
+            if (triangleCountElement) {
+                triangleCountElement.textContent = Math.round(stats.triangles / 1000) + 'K';
+            }
+            
+            // 性能监控统计
+            const fpsElement = document.getElementById('fps-counter');
+            if (fpsElement) {
+                fpsElement.textContent = stats.performance.fps || 60;
+            }
+            
+            const memoryElement = document.getElementById('memory-usage');
+            if (memoryElement) {
+                memoryElement.textContent = stats.performance.memoryUsage + 'MB';
+            }
+            
+            const culledElement = document.getElementById('culled-count');
+            if (culledElement) {
+                culledElement.textContent = stats.performance.culledObjects;
+            }
+            
+            const visibleElement = document.getElementById('visible-count');
+            if (visibleElement) {
+                visibleElement.textContent = stats.performance.visibleObjects;
+            }
+            
+            // 详细性能信息
+            const frameTimeElement = document.getElementById('frame-time');
+            if (frameTimeElement) {
+                frameTimeElement.textContent = Math.round(stats.performance.frameTime * 100) / 100 + 'ms';
+            }
+            
+            const drawCallsElement = document.getElementById('draw-calls');
+            if (drawCallsElement) {
+                drawCallsElement.textContent = stats.performance.drawCalls;
+            }
+            
+            const vertexCountElement = document.getElementById('vertex-count');
+            if (vertexCountElement) {
+                vertexCountElement.textContent = Math.round(stats.performance.vertices / 1000) + 'K';
+            }
+            
+            const adaptiveQualityElement = document.getElementById('adaptive-quality');
+            if (adaptiveQualityElement) {
+                adaptiveQualityElement.textContent = Math.round(stats.adaptive.currentQuality * 100) + '%';
+            }
+        }
+        
+        // 启动统计信息更新
+        function startStatsUpdate() {
+            if (statsUpdateInterval) clearInterval(statsUpdateInterval);
+            
+            statsUpdateInterval = setInterval(() => {
+                if (cityRenderer) {
+                    updateDisplayStats();
+                }
+            }, 500); // 更频繁的更新以显示实时性能
+        }
+        
+        // 导出城市数据
+        function exportCityData() {
+            if (!cityRenderer) return;
+            
+            const stats = cityRenderer.getStats();
+            const data = {
+                timestamp: new Date().toISOString(),
+                performance: cityRenderer.performanceLevel,
+                stats: stats,
+                settings: cityRenderer.qualitySettings
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'solarpunk-city-data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // 切换自动旋转
+        function toggleAutoRotate() {
+            if (cityRenderer && cityRenderer.controls) {
+                const currentState = cityRenderer.controls.autoRotate;
+                cityRenderer.setAutoRotate(!currentState);
+            }
+        }
+        
+        // 重置相机视角
+        function resetCamera() {
+            if (cityRenderer) {
+                cityRenderer.setCameraPosition(40, 25, 40);
+            }
+        }
+        
+        // 切换LOD系统
+        function toggleLOD() {
+            if (cityRenderer) {
+                const currentParams = {
+                    seed: parseInt(document.getElementById('seed').value) || 42,
+                    gridSize: parseInt(document.getElementById('grid').value) || 6,
+                    maxHeight: parseInt(document.getElementById('maxH').value) || 16,
+                    density: 0.7,
+                    useLOD: true,
+                    useMerging: false
+                };
+                cityRenderer.generateCity(currentParams);
+                console.log('🎯 LOD system enabled');
+            }
+        }
+        
+        // 切换几何体合并
+        function toggleMerging() {
+            if (cityRenderer) {
+                const currentParams = {
+                    seed: parseInt(document.getElementById('seed').value) || 42,
+                    gridSize: parseInt(document.getElementById('grid').value) || 6,
+                    maxHeight: parseInt(document.getElementById('maxH').value) || 16,
+                    density: 0.7,
+                    useLOD: false,
+                    useMerging: true
+                };
+                cityRenderer.generateCity(currentParams);
+                console.log('🔗 Geometry merging enabled');
+            }
+        }
+        
+        // 切换自适应优化
+        function toggleAdaptive() {
+            if (cityRenderer) {
+                cityRenderer.adaptiveSettings.autoOptimize = !cityRenderer.adaptiveSettings.autoOptimize;
+                console.log('📈 Adaptive optimization:', cityRenderer.adaptiveSettings.autoOptimize ? 'enabled' : 'disabled');
+            }
+        }
+        
+        // 强制优化
+        function forceOptimize() {
+            if (cityRenderer) {
+                cityRenderer.adaptiveSettings.currentQuality = Math.max(0.3, cityRenderer.adaptiveSettings.currentQuality - 0.2);
+                cityRenderer.applyQualitySettings();
+                console.log('⚡ Forced optimization, quality:', Math.round(cityRenderer.adaptiveSettings.currentQuality * 100) + '%');
+            }
+        }
+        
+        // 切换辉光效果
+        function toggleBloom() {
+            if (cityRenderer && cityRenderer.visualSettings) {
+                cityRenderer.visualSettings.enableBloom = !cityRenderer.visualSettings.enableBloom;
+                cityRenderer.setupAdvancedPostProcessing();
+                console.log('🌟 Bloom effect:', cityRenderer.visualSettings.enableBloom ? 'enabled' : 'disabled');
+            }
+        }
+        
+        // 切换粒子效果
+        function toggleParticles() {
+            if (cityRenderer && cityRenderer.particleSystems) {
+                cityRenderer.particleSystems.forEach(system => {
+                    system.mesh.visible = !system.mesh.visible;
+                });
+                console.log('✨ Particle effects toggled');
+            }
+        }
+        
+        // 循环切换材质风格
+        function cycleMaterials() {
+            if (cityRenderer) {
+                const currentParams = {
+                    seed: parseInt(document.getElementById('seed').value) || 42,
+                    gridSize: parseInt(document.getElementById('grid').value) || 6,
+                    maxHeight: parseInt(document.getElementById('maxH').value) || 16,
+                    density: 0.7,
+                    useLOD: false,
+                    useMerging: false,
+                    visualEnhancement: true
+                };
+                cityRenderer.generateCity(currentParams);
+                console.log('🎨 Materials refreshed with visual enhancements');
+            }
+        }
+        
+        // 切换动态光照
+        function toggleDynamicLights() {
+            if (cityRenderer && cityRenderer.dynamicLights) {
+                cityRenderer.dynamicLights.forEach(light => {
+                    light.visible = !light.visible;
+                });
+                console.log('💡 Dynamic lights toggled');
+            }
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const success = initAdvancedRenderer();
+                
+                setTimeout(() => {
+                    const loadingOverlay = document.getElementById('loading-overlay');
+                    if (loadingOverlay) {
+                        if (success) {
+                            loadingOverlay.style.opacity = '0';
+                            loadingOverlay.style.transition = 'opacity 0.5s ease';
+                            setTimeout(() => {
+                                loadingOverlay.style.display = 'none';
+                            }, 500);
+                        } else {
+                            loadingOverlay.innerHTML = '<div style="text-align: center; color: #f44336;"><div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div><div style="font-size: 1.1rem;">渲染引擎初始化失败</div><div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">请检查浏览器WebGL支持</div></div>';
+                        }
+                    }
+                }, 1000);
+            }, 1500);
+            
+            // 绑定生成按钮
+            document.getElementById('genBtn').addEventListener('click', () => {
+                const loadingOverlay = document.getElementById('loading-overlay');
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = 'flex';
+                    loadingOverlay.style.opacity = '1';
+                }
+                
+                setTimeout(() => {
+                    generateAdvancedCity();
+                    setTimeout(() => {
+                        if (loadingOverlay) {
+                            loadingOverlay.style.opacity = '0';
+                            setTimeout(() => {
+                                loadingOverlay.style.display = 'none';
+                            }, 500);
+                        }
+                    }, 800);
+                }, 200);
+            });
+            
+            // 参数变化时自动重新生成
+            ['seed', 'grid', 'maxH'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('change', () => {
+                        setTimeout(generateAdvancedCity, 100);
+                    });
+                }
+            });
+        });
+        
+        // 清理资源
+        window.addEventListener('beforeunload', () => {
+            if (cityRenderer) {
+                cityRenderer.dispose();
+            }
+            if (statsUpdateInterval) {
+                clearInterval(statsUpdateInterval);
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 左右布局响应式设计 */
+        @media (max-width: 1200px) {
+            div[style*="display: grid; grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 30px !important;
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            #viewport {
+                height: 50vh;
+            }
+            
+            div[style*="display: grid; grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+        }
+    </style>
+</body>
+</html>

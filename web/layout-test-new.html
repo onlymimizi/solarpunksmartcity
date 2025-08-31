@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>布局测试 - 左右布局</title>
+    <link rel="stylesheet" href="components/ui.css">
+    <style>
+        .test-left {
+            background: rgba(255, 0, 0, 0.3);
+            border: 2px solid red;
+            padding: 20px;
+            min-height: 300px;
+        }
+        .test-right {
+            background: rgba(0, 255, 0, 0.3);
+            border: 2px solid green;
+            padding: 20px;
+            min-height: 300px;
+        }
+        .timestamp {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: yellow;
+            color: black;
+            padding: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="timestamp">更新时间: 2025/8/31 11:30</div>
+    
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+    </div>
+    
+    <div class="container">
+        <h1 style="color: white; text-align: center; margin-bottom: 40px;">左右布局测试</h1>
+        
+        <!-- 左右布局测试 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+            <div class="test-left">
+                <h2 style="color: white;">左侧内容</h2>
+                <p style="color: white;">这是左侧的测试内容</p>
+                <p style="color: white;">如果你看到红色边框，说明左侧显示正常</p>
+            </div>
+            
+            <div class="test-right">
+                <h2 style="color: white;">右侧内容</h2>
+                <p style="color: white;">这是右侧的测试内容</p>
+                <p style="color: white;">如果你看到绿色边框，说明右侧显示正常</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; color: white; background: rgba(0, 0, 255, 0.3); padding: 20px; border: 2px solid blue;">
+            <h3>底部内容</h3>
+            <p>这是底部的完整宽度内容</p>
+        </div>
+    </div>
+</body>
+</html>

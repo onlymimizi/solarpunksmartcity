@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康数据分析 - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 高科技背景 -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index.html" class="back-button">← 返回主页</a>
+        </div>
+        
+        <!-- 页面标题区域 -->
+        <div class="page-header" style="text-align: center; margin-bottom: 60px;">
+            <div class="tech-badge">
+                <div class="badge-glow"></div>
+                <span class="badge-text">💚 HEALTH ANALYTICS MODULE</span>
+            </div>
+            <h1 style="margin: 30px 0 20px;">健康数据分析</h1>
+            <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.8); max-width: 800px; margin: 0 auto;">
+                AI驱动的个人健康数据分析与智能预警系统
+            </p>
+        </div>
+
+        <!-- 主要内容区域 - 左右布局 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+        
+        <!-- 左侧：健康数据输入 -->
+        <div class="tech-module health-module">
+            <div class="module-header">
+                <div class="module-status-bar">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">DATA COLLECTION ACTIVE</span>
+                </div>
+                <div class="module-id">INPUT_PANEL</div>
+            </div>
+            
+            <div class="module-icon-container">
+                <div class="icon-background health-bg"></div>
+                <div class="module-icon">📋</div>
+                <div class="icon-pulse health-pulse"></div>
+            </div>
+            
+            <div class="module-info">
+                <h3 class="module-name">健康数据采集</h3>
+                <p class="module-description">输入个人健康指标进行AI智能分析与评估</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 30px 0;">
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        💓 心率 (BPM)
+                    </label>
+                    <input id="heart-rate" type="number" value="72" min="40" max="200" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        静息心率每分钟跳动次数
+                    </small>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        🩸 血压 (mmHg)
+                    </label>
+                    <div style="display: flex; gap: 10px;">
+                        <input id="systolic" type="number" value="120" min="80" max="200" placeholder="收缩压" style="flex: 1; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                        <input id="diastolic" type="number" value="80" min="50" max="120" placeholder="舒张压" style="flex: 1; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    </div>
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        收缩压/舒张压数值
+                    </small>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        🏃 运动量 (分钟/天)
+                    </label>
+                    <input id="exercise" type="number" value="30" min="0" max="300" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        每日平均运动时长
+                    </small>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        😴 睡眠质量 (小时)
+                    </label>
+                    <input id="sleep" type="number" value="7.5" min="0" max="12" step="0.5" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        每日平均睡眠时长
+                    </small>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        🧘 压力水平 (1-10)
+                    </label>
+                    <input id="stress" type="number" value="4" min="1" max="10" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        主观压力感受评分
+                    </small>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #e91e63; font-size: 1rem; letter-spacing: 1px;">
+                        🍎 饮食评分 (1-10)
+                    </label>
+                    <input id="diet" type="number" value="7" min="1" max="10" style="width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid rgba(233, 30, 99, 0.4); border-radius: 10px; background: rgba(233, 30, 99, 0.05); color: white;">
+                    <small style="color: #f48fb1; font-size: 0.9rem; margin-top: 8px; display: block;">
+                        饮食健康程度自评
+                    </small>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="analyze-health-btn" class="tech-button health-button" style="width: auto; padding: 18px 40px; font-size: 1.2rem; min-width: 280px;">
+                    <span class="button-text">🤖 AI健康分析</span>
+                    <div class="button-arrow">→</div>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 右侧：分析结果 -->
+        <div class="tech-module health-module" id="health-results-panel" style="display: none;">
+            <div class="module-header">
+                <div class="module-status-bar">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">AI ANALYSIS COMPLETE</span>
+                </div>
+                <div class="module-id">RESULTS</div>
+            </div>
+            
+            <div class="module-icon-container">
+                <div class="icon-background health-bg"></div>
+                <div class="module-icon">🧠</div>
+                <div class="icon-pulse health-pulse"></div>
+            </div>
+            
+            <div class="module-info">
+                <h3 class="module-name">AI健康评估报告</h3>
+                <p class="module-description">基于机器学习的个性化健康分析与建议</p>
+            </div>
+            
+            <!-- 技术规格 -->
+            <div class="tech-specs">
+                <div class="spec-item">
+                    <span class="spec-label">ACCURACY</span>
+                    <span class="spec-value">96.8%</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">HEALTH SCORE</span>
+                    <span class="spec-value" id="health-score">85</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">RISK LEVEL</span>
+                    <span class="spec-value" id="risk-level">LOW</span>
+                </div>
+            </div>
+            
+            <!-- 健康评估 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 2.5rem; margin-right: 15px;">📊</div>
+                        <strong style="font-size: 1.3rem; color: #e91e63; letter-spacing: 1px;">健康指标评估</strong>
+                    </div>
+                    <div id="health-metrics" style="line-height: 1.8; color: #f48fb1;">
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #e91e63;">
+                            • 心血管健康：<span id="cardio-health">良好</span>
+                        </div>
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #e91e63;">
+                            • 运动水平：<span id="fitness-level">中等</span>
+                        </div>
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #e91e63;">
+                            • 生活方式：<span id="lifestyle-score">健康</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 25px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="font-size: 2.5rem; margin-right: 15px;">💡</div>
+                        <strong style="font-size: 1.3rem; color: #e91e63; letter-spacing: 1px;">AI智能建议</strong>
+                    </div>
+                    <div id="health-recommendations" style="line-height: 1.8; color: #f48fb1;">
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #e91e63;">
+                            • <span id="recommendation-1">保持当前运动频率</span>
+                        </div>
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #e91e63;">
+                            • <span id="recommendation-2">适当增加睡眠时间</span>
+                        </div>
+                        <div style="background: rgba(233, 30, 99, 0.1); padding: 12px 16px; border-radius: 8px; border-left: 3px solid #e91e63;">
+                            • <span id="recommendation-3">注意压力管理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div> <!-- 结束左右布局容器 -->
+
+        <!-- 健康监控仪表板 -->
+        <div class="tech-module health-module">
+            <div class="module-header">
+                <div class="module-status-bar">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">24/7 MONITORING</span>
+                </div>
+                <div class="module-id">DASHBOARD</div>
+            </div>
+            
+            <div class="module-icon-container">
+                <div class="icon-background health-bg"></div>
+                <div class="module-icon">📈</div>
+                <div class="icon-pulse health-pulse"></div>
+            </div>
+            
+            <div class="module-info">
+                <h3 class="module-name">健康监控仪表板</h3>
+                <p class="module-description">实时健康数据监控与趋势分析</p>
+            </div>
+            
+            <!-- 监控数据 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 20px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">💓</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #e91e63; margin-bottom: 5px;" id="current-heart-rate">72</div>
+                    <div style="font-size: 0.9rem; color: #f48fb1;">当前心率 BPM</div>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 20px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🏃</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #e91e63; margin-bottom: 5px;" id="daily-steps">8,432</div>
+                    <div style="font-size: 0.9rem; color: #f48fb1;">今日步数</div>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 20px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🔥</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #e91e63; margin-bottom: 5px;" id="calories-burned">342</div>
+                    <div style="font-size: 0.9rem; color: #f48fb1;">消耗卡路里</div>
+                </div>
+                
+                <div style="background: rgba(233, 30, 99, 0.1); border: 2px solid rgba(233, 30, 99, 0.3); border-radius: 15px; padding: 20px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">😴</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #e91e63; margin-bottom: 5px;" id="sleep-quality">87%</div>
+                    <div style="font-size: 0.9rem; color: #f48fb1;">睡眠质量</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI健康分析功能
+        function performHealthAnalysis() {
+            const heartRate = parseInt(document.getElementById('heart-rate').value) || 72;
+            const systolic = parseInt(document.getElementById('systolic').value) || 120;
+            const diastolic = parseInt(document.getElementById('diastolic').value) || 80;
+            const exercise = parseInt(document.getElementById('exercise').value) || 30;
+            const sleep = parseFloat(document.getElementById('sleep').value) || 7.5;
+            const stress = parseInt(document.getElementById('stress').value) || 4;
+            const diet = parseInt(document.getElementById('diet').value) || 7;
+            
+            // 计算健康评分
+            let healthScore = 100;
+            
+            // 心率评估
+            if (heartRate < 60 || heartRate > 100) healthScore -= 10;
+            else if (heartRate >= 60 && heartRate <= 80) healthScore += 5;
+            
+            // 血压评估
+            if (systolic > 140 || diastolic > 90) healthScore -= 15;
+            else if (systolic <= 120 && diastolic <= 80) healthScore += 5;
+            
+            // 运动评估
+            if (exercise < 30) healthScore -= 10;
+            else if (exercise >= 60) healthScore += 10;
+            
+            // 睡眠评估
+            if (sleep < 6 || sleep > 9) healthScore -= 10;
+            else if (sleep >= 7 && sleep <= 8) healthScore += 5;
+            
+            // 压力评估
+            healthScore -= stress * 2;
+            
+            // 饮食评估
+            healthScore += (diet - 5) * 2;
+            
+            healthScore = Math.max(0, Math.min(100, healthScore));
+            
+            // 风险等级
+            let riskLevel = 'LOW';
+            if (healthScore < 60) riskLevel = 'HIGH';
+            else if (healthScore < 80) riskLevel = 'MED';
+            
+            // 心血管健康
+            let cardioHealth = '良好';
+            if (heartRate > 100 || systolic > 140) cardioHealth = '需关注';
+            else if (heartRate <= 70 && systolic <= 120) cardioHealth = '优秀';
+            
+            // 运动水平
+            let fitnessLevel = '中等';
+            if (exercise < 30) fitnessLevel = '偏低';
+            else if (exercise >= 60) fitnessLevel = '优秀';
+            
+            // 生活方式
+            let lifestyleScore = '健康';
+            if (stress > 7 || sleep < 6) lifestyleScore = '需改善';
+            else if (stress <= 3 && sleep >= 7 && diet >= 8) lifestyleScore = '优秀';
+            
+            // 生成建议
+            const recommendations = [];
+            if (exercise < 30) recommendations.push('建议增加每日运动量至30分钟以上');
+            else recommendations.push('保持当前良好的运动习惯');
+            
+            if (sleep < 7) recommendations.push('建议增加睡眠时间至7-8小时');
+            else if (sleep > 9) recommendations.push('适当减少睡眠时间，保持7-8小时');
+            else recommendations.push('保持良好的睡眠习惯');
+            
+            if (stress > 6) recommendations.push('建议进行压力管理，尝试冥想或放松技巧');
+            else recommendations.push('继续保持良好的心理状态');
+            
+            // 更新显示
+            document.getElementById('health-score').textContent = Math.round(healthScore);
+            document.getElementById('risk-level').textContent = riskLevel;
+            document.getElementById('cardio-health').textContent = cardioHealth;
+            document.getElementById('fitness-level').textContent = fitnessLevel;
+            document.getElementById('lifestyle-score').textContent = lifestyleScore;
+            
+            document.getElementById('recommendation-1').textContent = recommendations[0];
+            document.getElementById('recommendation-2').textContent = recommendations[1];
+            document.getElementById('recommendation-3').textContent = recommendations[2];
+            
+            // 显示结果面板
+            document.getElementById('health-results-panel').style.display = 'block';
+            document.getElementById('health-results-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 实时健康数据更新
+        function updateHealthDashboard() {
+            const baseHeartRate = parseInt(document.getElementById('heart-rate').value) || 72;
+            const baseExercise = parseInt(document.getElementById('exercise').value) || 30;
+            const baseSleep = parseFloat(document.getElementById('sleep').value) || 7.5;
+            
+            // 模拟实时数据
+            const currentHeartRate = Math.round(baseHeartRate * (0.9 + Math.random() * 0.2));
+            const dailySteps = Math.round(baseExercise * 280 * (0.8 + Math.random() * 0.4));
+            const caloriesBurned = Math.round(dailySteps * 0.04);
+            const sleepQuality = Math.round(Math.min(100, baseSleep / 8 * 100 * (0.9 + Math.random() * 0.2)));
+            
+            document.getElementById('current-heart-rate').textContent = currentHeartRate;
+            document.getElementById('daily-steps').textContent = dailySteps.toLocaleString();
+            document.getElementById('calories-burned').textContent = caloriesBurned;
+            document.getElementById('sleep-quality').textContent = sleepQuality + '%';
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定分析按钮
+            document.getElementById('analyze-health-btn').addEventListener('click', () => {
+                const btn = document.getElementById('analyze-health-btn');
+                const originalText = btn.querySelector('.button-text').textContent;
+                btn.querySelector('.button-text').textContent = '🔄 AI分析中...';
+                btn.style.pointerEvents = 'none';
+                
+                setTimeout(() => {
+                    performHealthAnalysis();
+                    btn.querySelector('.button-text').textContent = originalText;
+                    btn.style.pointerEvents = 'auto';
+                }, 2500);
+            });
+            
+            // 启动实时数据更新
+            updateHealthDashboard();
+            setInterval(updateHealthDashboard, 4000);
+            
+            // 输入参数变化时更新仪表板
+            ['heart-rate', 'exercise', 'sleep'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateHealthDashboard);
+            });
+        });
+    </script>
+</body>
+</html>

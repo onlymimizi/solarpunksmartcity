@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>布局测试</title>
+    <link rel="stylesheet" href="components/ui.css">
+    <style>
+        .test-container {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid red;
+            min-height: 200px;
+            margin: 20px 0;
+        }
+        .content-area {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid green;
+            padding: 20px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+    </div>
+    
+    <div class="container test-container">
+        <h1 style="color: white; text-align: center;">布局测试页面</h1>
+        <div class="content-area">
+            <p style="color: white;">这是测试内容区域</p>
+            <p style="color: white;">容器最大宽度: 1400px</p>
+            <p style="color: white;">左右边距: 40px</p>
+            <p style="color: white;">如果你看到这个页面，说明CSS已经生效</p>
+        </div>
+    </div>
+</body>
+</html>

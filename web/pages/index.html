@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solarpunk Smart City - 未来智慧城市</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 全屏主页面 -->
+    <div class="main-container">
+        <!-- 动态背景层 -->
+        <div class="tech-background">
+            <div class="grid-overlay"></div>
+            <div class="floating-particles"></div>
+            <div class="scan-lines"></div>
+        </div>
+        
+        <!-- 中央内容区域 -->
+        <div class="central-content">
+            <!-- 顶部标识 -->
+            <div class="tech-badge">
+                <div class="badge-glow"></div>
+                <span class="badge-text">🌱 NEXT-GEN SMART CITY PLATFORM</span>
+            </div>
+            
+            <!-- 主标题 -->
+            <div class="main-title-section">
+                <h1 class="main-title">
+                    <span class="title-word">SOLARPUNK</span>
+                    <span class="title-word highlight">SMART CITY</span>
+                </h1>
+                <div class="title-underline"></div>
+                <p class="main-subtitle">
+                    基于人工智能与区块链技术的下一代智慧城市生态系统
+                </p>
+            </div>
+            
+            <!-- 核心数据展示 -->
+            <div class="core-metrics">
+                <div class="metric-item">
+                    <div class="metric-icon">🏢</div>
+                    <div class="metric-value" id="buildings">2,847</div>
+                    <div class="metric-label">智能建筑</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" style="width: 89%"></div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon">🚗</div>
+                    <div class="metric-value" id="vehicles">15,632</div>
+                    <div class="metric-label">自动驾驶车辆</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" style="width: 94%"></div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-value" id="energy">98.7%</div>
+                    <div class="metric-label">清洁能源占比</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" style="width: 98%"></div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon">🔗</div>
+                    <div class="metric-value" id="blockchain">47,293</div>
+                    <div class="metric-label">区块链交易</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" style="width: 76%"></div>
+                    </div>
+
+                    <!-- 城市数据服务 -->
+                    <div class="tech-module data-service-module">
+                        <div class="module-header">
+                            <div class="module-status-bar">
+                                <div class="status-indicator active"></div>
+                                <span class="status-text">DAAS ONLINE</span>
+                            </div>
+                            <div class="module-id">MODULE_05</div>
+                        </div>
+                        
+                        <div class="module-icon-container">
+                            <div class="icon-background data-service-bg"></div>
+                            <div class="module-icon">📊</div>
+                            <div class="icon-pulse data-service-pulse"></div>
+                        </div>
+                        
+                        <div class="module-info">
+                            <h3 class="module-name">DATA SERVICE API</h3>
+                            <p class="module-description">多维度城市数据采集与API服务平台 - 数据即服务</p>
+                            
+                            <div class="tech-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">DATA</span>
+                                    <span class="spec-value">2.3TB</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">CLIENTS</span>
+                                    <span class="spec-value">156</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">REVENUE</span>
+                                    <span class="spec-value">¥12K</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-action">
+                            <a href="./data-service.html" class="tech-button data-service-button">
+                                <span class="button-text">ACCESS DATA API</span>
+                                <div class="button-arrow">→</div>
+                                <div class="button-glow"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能模块矩阵 -->
+            <div class="modules-matrix">
+                <div class="matrix-header">
+                    <h2 class="matrix-title">CORE MODULES</h2>
+                    <div class="matrix-subtitle">选择模块开始体验未来城市管理系统</div>
+                </div>
+                
+                <div class="modules-grid-center">
+                    <!-- 3D城市可视化 -->
+                    <div class="tech-module city-module">
+                        <div class="module-header">
+                            <div class="module-status-bar">
+                                <div class="status-indicator active"></div>
+                                <span class="status-text">SYSTEM ONLINE</span>
+                            </div>
+                            <div class="module-id">MODULE_01</div>
+                        </div>
+                        
+                        <div class="module-icon-container">
+                            <div class="icon-background city-bg"></div>
+                            <div class="module-icon">🏙️</div>
+                            <div class="icon-pulse city-pulse"></div>
+                        </div>
+                        
+                        <div class="module-info">
+                            <h3 class="module-name">3D CITY VISUALIZATION</h3>
+                            <p class="module-description">沉浸式太阳能朋克城市三维建模与实时渲染系统</p>
+                            
+                            <div class="tech-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">ENGINE</span>
+                                    <span class="spec-value">Three.js</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">FPS</span>
+                                    <span class="spec-value">60</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">MODELS</span>
+                                    <span class="spec-value">2,847</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-action">
+                            <a href="./city.html" class="tech-button city-button">
+                                <span class="button-text">ENTER 3D WORLD</span>
+                                <div class="button-arrow">→</div>
+                                <div class="button-glow"></div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 智能交通系统 -->
+                    <div class="tech-module traffic-module">
+                        <div class="module-header">
+                            <div class="module-status-bar">
+                                <div class="status-indicator active"></div>
+                                <span class="status-text">AI PROCESSING</span>
+                            </div>
+                            <div class="module-id">MODULE_02</div>
+                        </div>
+                        
+                        <div class="module-icon-container">
+                            <div class="icon-background traffic-bg"></div>
+                            <div class="module-icon">🚦</div>
+                            <div class="icon-pulse traffic-pulse"></div>
+                        </div>
+                        
+                        <div class="module-info">
+                            <h3 class="module-name">SMART TRAFFIC AI</h3>
+                            <p class="module-description">基于机器学习的智能交通流量优化与预测系统</p>
+                            
+                            <div class="tech-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">ALGORITHM</span>
+                                    <span class="spec-value">ML/AI</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">EFFICIENCY</span>
+                                    <span class="spec-value">+32%</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">RESPONSE</span>
+                                    <span class="spec-value">2.1s</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-action">
+                            <a href="./traffic.html" class="tech-button traffic-button">
+                                <span class="button-text">OPTIMIZE TRAFFIC</span>
+                                <div class="button-arrow">→</div>
+                                <div class="button-glow"></div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 健康监测中心 -->
+                    <div class="tech-module health-module">
+                        <div class="module-header">
+                            <div class="module-status-bar">
+                                <div class="status-indicator active"></div>
+                                <span class="status-text">MONITORING</span>
+                            </div>
+                            <div class="module-id">MODULE_03</div>
+                        </div>
+                        
+                        <div class="module-icon-container">
+                            <div class="icon-background health-bg"></div>
+                            <div class="module-icon">💚</div>
+                            <div class="icon-pulse health-pulse"></div>
+                        </div>
+                        
+                        <div class="module-info">
+                            <h3 class="module-name">HEALTH ANALYTICS</h3>
+                            <p class="module-description">AI驱动的个人健康数据分析与智能预警系统</p>
+                            
+                            <div class="tech-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">ACCURACY</span>
+                                    <span class="spec-value">96.8%</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">SENSORS</span>
+                                    <span class="spec-value">24/7</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">USERS</span>
+                                    <span class="spec-value">8,432</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-action">
+                            <a href="./health.html" class="tech-button health-button">
+                                <span class="button-text">ANALYZE HEALTH</span>
+                                <div class="button-arrow">→</div>
+                                <div class="button-glow"></div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 区块链治理 -->
+                    <div class="tech-module blockchain-module">
+                        <div class="module-header">
+                            <div class="module-status-bar">
+                                <div class="status-indicator active"></div>
+                                <span class="status-text">BLOCKCHAIN SYNC</span>
+                            </div>
+                            <div class="module-id">MODULE_04</div>
+                        </div>
+                        
+                        <div class="module-icon-container">
+                            <div class="icon-background blockchain-bg"></div>
+                            <div class="module-icon">🔗</div>
+                            <div class="icon-pulse blockchain-pulse"></div>
+                        </div>
+                        
+                        <div class="module-info">
+                            <h3 class="module-name">BLOCKCHAIN GOVERNANCE</h3>
+                            <p class="module-description">去中心化数据存证与智能合约治理平台</p>
+                            
+                            <div class="tech-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">NETWORK</span>
+                                    <span class="spec-value">Web3</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">TXN</span>
+                                    <span class="spec-value">47,293</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">SECURITY</span>
+                                    <span class="spec-value">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-action">
+                            <a href="./blockchain.html" class="tech-button blockchain-button">
+                                <span class="button-text">ACCESS BLOCKCHAIN</span>
+                                <div class="button-arrow">→</div>
+                                <div class="button-glow"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部技术标识 -->
+            <div class="tech-footer">
+                <div class="tech-stack-display">
+                    <div class="stack-item">AI/ML</div>
+                    <div class="stack-separator">•</div>
+                    <div class="stack-item">Three.js</div>
+                    <div class="stack-separator">•</div>
+                    <div class="stack-item">Blockchain</div>
+                    <div class="stack-separator">•</div>
+                    <div class="stack-item">IoT</div>
+                    <div class="stack-separator">•</div>
+                    <div class="stack-item">Web3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 高科技数字滚动动画
+        function techCountUp(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // 页面加载动画序列
+        window.addEventListener('load', () => {
+            // 延迟启动各种动画
+            setTimeout(() => {
+                techCountUp(document.getElementById('buildings'), 2847, 1500);
+                techCountUp(document.getElementById('vehicles'), 15632, 2000);
+                techCountUp(document.getElementById('blockchain'), 47293, 2500);
+            }, 800);
+
+            // 能源百分比特殊动画
+            setTimeout(() => {
+                let current = 0;
+                const target = 98.7;
+                const energyEl = document.getElementById('energy');
+                const interval = setInterval(() => {
+                    current += 0.3;
+                    energyEl.textContent = current.toFixed(1) + '%';
+                    if (current >= target) {
+                        clearInterval(interval);
+                        energyEl.textContent = target + '%';
+                    }
+                }, 15);
+            }, 1200);
+        });
+
+        // 鼠标跟踪光效
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.tech-background');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            cursor.style.background = `
+                radial-gradient(600px at ${x * 100}% ${y * 100}%, rgba(0, 229, 255, 0.15), transparent),
+                linear-gradient(135deg, #0a0e27 0%, #1a237e 50%, #000051 100%)
+            `;
+        });
+    </script>
+</body>
+</html>

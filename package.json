@@ -1,0 +1,17 @@
+﻿{
+  "name": "solarpunk-smart-city-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:publicdata:local": "hardhat run scripts/deployPublicData.ts",
+    "deploy:publicdata:sepolia": "hardhat run scripts/deployPublicData.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.5",
+    "typescript": "^5.4.2",
+    "ts-node": "^10.9.2",
+    "dotenv": "^16.4.5"
+  }
+}

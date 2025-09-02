@@ -200,7 +200,7 @@ python -m http.server 8080
 
 ## 👥 开发团队
 
-- **项目负责人**：[您的姓名]
+- **项目负责人**：yuhongcai
 - **前端开发**：现代化Web技术栈
 - **后端开发**：Python FastAPI框架
 - **AI算法**：机器学习和数据分析
@@ -210,7 +210,7 @@ python -m http.server 8080
 
 - **项目主页**：https://github.com/your-username/solarpunk-smart-city
 - **问题反馈**：https://github.com/your-username/solarpunk-smart-city/issues
-- **邮箱**：your-email@example.com
+- **邮箱**：yuhongcai258@gmail.com
 
 ---
 

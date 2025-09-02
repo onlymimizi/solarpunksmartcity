@@ -208,8 +208,8 @@ python -m http.server 8080
 
 ## 📞 联系我们
 
-- **项目主页**：https://github.com/your-username/solarpunk-smart-city
-- **问题反馈**：https://github.com/your-username/solarpunk-smart-city/issues
+- **项目主页**：https://github.com/onlymimizi/solarpunksmartcity
+- **问题反馈**：https://github.com/onlymimizi/solarpunksmartcity/issues
 - **邮箱**：yuhongcai258@gmail.com
 
 ---

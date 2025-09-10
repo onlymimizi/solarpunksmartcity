@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Data Storage - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+</head>
+<body>
+    <!-- High-tech background -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index-en.html" class="back-button">← Back to Home</a>
+        </div>
+        
+        <div class="page-header">
+            <h1 class="page-title">⛓️ Blockchain Data Storage</h1>
+            <p class="page-subtitle">Decentralized Data Verification and Web3 Integration</p>
+        </div>
+        
+        <!-- Wallet Connection -->
+        <div class="wallet-section">
+            <h3>Web3 Wallet Connection</h3>
+            <div class="wallet-status" id="walletStatus">
+                <div class="status-indicator disconnected" id="statusIndicator"></div>
+                <span id="connectionStatus">Not Connected</span>
+            </div>
+            <div class="wallet-buttons">
+                <button class="wallet-btn metamask" onclick="connectMetaMask()">
+                    🦊 Connect MetaMask
+                </button>
+                <button class="wallet-btn walletconnect" onclick="connectWalletConnect()">
+                    🔗 WalletConnect
+                </button>
+                <button class="wallet-btn coinbase" onclick="connectCoinbase()">
+                    🔵 Coinbase Wallet
+                </button>
+            </div>
+            <div class="wallet-info" id="walletInfo" style="display: none;">
+                <div class="info-item">
+                    <span class="info-label">Address:</span>
+                    <span class="info-value" id="walletAddress">--</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Network:</span>
+                    <span class="info-value" id="networkName">--</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Balance:</span>
+                    <span class="info-value" id="walletBalance">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Data Storage Interface -->
+        <div class="storage-section" id="storageSection" style="display: none;">
+            <h3>Store City Data on Blockchain</h3>
+            <div class="data-input-panel">
+                <div class="input-group">
+                    <label>Data Type:</label>
+                    <select id="dataType">
+                        <option value="traffic">Traffic Data</option>
+                        <option value="health">Health Metrics</option>
+                        <option value="energy">Energy Consumption</option>
+                        <option value="environment">Environmental Data</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Data Content:</label>
+                    <textarea id="dataContent" placeholder="Enter JSON data to store on blockchain...">
+{
+  "timestamp": "2024-09-04T14:00:00Z",
+  "location": "Downtown District",
+  "metrics": {
+    "traffic_flow": 1250,
+    "air_quality": 45,
+    "energy_usage": 2.3
+  }
+}</textarea>
+                </div>
+                <div class="input-group">
+                    <label>Data Hash (SHA-256):</label>
+                    <input type="text" id="dataHash" readonly placeholder="Hash will be generated automatically">
+                </div>
+                <button class="store-btn" onclick="storeDataOnChain()">
+                    🔐 Store on Blockchain
+                </button>
+            </div>
+        </div>
+        
+        <!-- Transaction History -->
+        <div class="transaction-section" id="transactionSection" style="display: none;">
+            <h3>Recent Blockchain Transactions</h3>
+            <div class="transaction-list" id="transactionList">
+                <!-- Transactions will be displayed here -->
+            </div>
+        </div>
+        
+        <!-- Smart Contract Info -->
+        <div class="contract-section">
+            <h3>Smart Contract Information</h3>
+            <div class="contract-info">
+                <div class="contract-card">
+                    <h4>SolarpunkPublicData Contract</h4>
+                    <div class="contract-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Contract Address:</span>
+                            <span class="detail-value">0x742d35Cc6634C0532925a3b8D4C9db4C4C4b4C4C</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Network:</span>
+                            <span class="detail-value">Ethereum Sepolia Testnet</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Total Records:</span>
+                            <span class="detail-value" id="totalRecords">47,293</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Gas Optimization:</span>
+                            <span class="detail-value">✅ Enabled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Blockchain Features -->
+        <div class="blockchain-features">
+            <h3>Blockchain Integration Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h4>Data Immutability</h4>
+                    <p>Tamper-proof storage ensuring data integrity and authenticity</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h4>Decentralized Network</h4>
+                    <p>Distributed storage across multiple nodes for maximum reliability</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h4>Transparent Verification</h4>
+                    <p>Public verification of all data transactions and modifications</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Smart Contracts</h4>
+                    <p>Automated data validation and processing through smart contracts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let provider = null;
+        let signer = null;
+        let userAccount = null;
+        
+        async function connectMetaMask() {
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    signer = provider.getSigner();
+                    userAccount = await signer.getAddress();
+                    
+                    updateWalletUI();
+                    showStorageSection();
+                } else {
+                    alert('MetaMask is not installed. Please install MetaMask to continue.');
+                }
+            } catch (error) {
+                console.error('Error connecting to MetaMask:', error);
+                alert('Failed to connect to MetaMask. Please try again.');
+            }
+        }
+        
+        async function connectWalletConnect() {
+            // Simulate WalletConnect connection
+            setTimeout(() => {
+                userAccount = '0x1234567890123456789012345678901234567890';
+                updateWalletUI();
+                showStorageSection();
+                alert('WalletConnect integration would be implemented here');
+            }, 1000);
+        }
+        
+        async function connectCoinbase() {
+            // Simulate Coinbase Wallet connection
+            setTimeout(() => {
+                userAccount = '0x0987654321098765432109876543210987654321';
+                updateWalletUI();
+                showStorageSection();
+                alert('Coinbase Wallet integration would be implemented here');
+            }, 1000);
+        }
+        
+        async function updateWalletUI() {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const connectionStatus = document.getElementById('connectionStatus');
+            const walletInfo = document.getElementById('walletInfo');
+            const walletAddress = document.getElementById('walletAddress');
+            const networkName = document.getElementById('networkName');
+            const walletBalance = document.getElementById('walletBalance');
+            
+            statusIndicator.className = 'status-indicator connected';
+            connectionStatus.textContent = 'Connected';
+            walletInfo.style.display = 'block';
+            
+            walletAddress.textContent = userAccount ? 
+                userAccount.substring(0, 6) + '...' + userAccount.substring(38) : '--';
+            networkName.textContent = 'Ethereum Sepolia';
+            
+            if (provider && signer) {
+                try {
+                    const balance = await signer.getBalance();
+                    walletBalance.textContent = ethers.utils.formatEther(balance).substring(0, 6) + ' ETH';
+                } catch (error) {
+                    walletBalance.textContent = '-- ETH';
+                }
+            } else {
+                walletBalance.textContent = '1.234 ETH';
+            }
+        }
+        
+        function showStorageSection() {
+            document.getElementById('storageSection').style.display = 'block';
+            document.getElementById('transactionSection').style.display = 'block';
+            generateSampleTransactions();
+        }
+        
+        async function storeDataOnChain() {
+            const dataType = document.getElementById('dataType').value;
+            const dataContent = document.getElementById('dataContent').value;
+            const dataHashField = document.getElementById('dataHash');
+            
+            try {
+                // Generate hash
+                const hash = await generateDataHash(dataContent);
+                dataHashField.value = hash;
+                
+                // Simulate blockchain transaction
+                const txHash = await simulateBlockchainTransaction(dataType, dataContent, hash);
+                
+                // Add to transaction history
+                addTransactionToHistory(txHash, dataType, hash);
+                
+                alert(`Data successfully stored on blockchain!\nTransaction Hash: ${txHash}`);
+                
+            } catch (error) {
+                console.error('Error storing data:', error);
+                alert('Failed to store data on blockchain. Please try again.');
+            }
+        }
+        
+        async function generateDataHash(data) {
+            const encoder = new TextEncoder();
+            const dataBuffer = encoder.encode(data);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        async function simulateBlockchainTransaction(dataType, content, hash) {
+            // Simulate transaction delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Generate mock transaction hash
+            const txHash = '0x' + Math.random().toString(16).substring(2, 66);
+            
+            return txHash;
+        }
+        
+        function addTransactionToHistory(txHash, dataType, dataHash) {
+            const transactionList = document.getElementById('transactionList');
+            const timestamp = new Date().toLocaleString();
+            
+            const transactionItem = document.createElement('div');
+            transactionItem.className = 'transaction-item';
+            transactionItem.innerHTML = `
+                <div class="tx-header">
+                    <span class="tx-type">${dataType.toUpperCase()}</span>
+                    <span class="tx-status success">✅ Confirmed</span>
+                </div>
+                <div class="tx-details">
+                    <div class="tx-detail">
+                        <span class="tx-label">Transaction Hash:</span>
+                        <span class="tx-value">${txHash.substring(0, 10)}...${txHash.substring(58)}</span>
+                    </div>
+                    <div class="tx-detail">
+                        <span class="tx-label">Data Hash:</span>
+                        <span class="tx-value">${dataHash.substring(0, 16)}...</span>
+                    </div>
+                    <div class="tx-detail">
+                        <span class="tx-label">Timestamp:</span>
+                        <span class="tx-value">${timestamp}</span>
+                    </div>
+                </div>
+            `;
+            
+            transactionList.insertBefore(transactionItem, transactionList.firstChild);
+        }
+        
+        function generateSampleTransactions() {
+            const sampleTxs = [
+                { type: 'traffic', hash: '0xa1b2c3d4e5f6...', time: '2024-09-04 13:45:23' },
+                { type: 'health', hash: '0xf6e5d4c3b2a1...', time: '2024-09-04 13:30:15' },
+                { type: 'energy', hash: '0x123456789abc...', time: '2024-09-04 13:15:08' }
+            ];
+            
+            const transactionList = document.getElementById('transactionList');
+            sampleTxs.forEach(tx => {
+                const transactionItem = document.createElement('div');
+                transactionItem.className = 'transaction-item';
+                transactionItem.innerHTML = `
+                    <div class="tx-header">
+                        <span class="tx-type">${tx.type.toUpperCase()}</span>
+                        <span class="tx-status success">✅ Confirmed</span>
+                    </div>
+                    <div class="tx-details">
+                        <div class="tx-detail">
+                            <span class="tx-label">Transaction Hash:</span>
+                            <span class="tx-value">${tx.hash}</span>
+                        </div>
+                        <div class="tx-detail">
+                            <span class="tx-label">Timestamp:</span>
+                            <span class="tx-value">${tx.time}</span>
+                        </div>
+                    </div>
+                `;
+                transactionList.appendChild(transactionItem);
+            });
+        }
+        
+        // Auto-connect demo wallet after 3 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                connectMetaMask();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

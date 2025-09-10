@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Service Platform - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- High-tech background -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index-en.html" class="back-button">← Back to Home</a>
+        </div>
+        
+        <div class="page-header">
+            <h1 class="page-title">📊 Data-as-a-Service Platform</h1>
+            <p class="page-subtitle">Multi-dimensional City Data API Marketplace</p>
+        </div>
+        
+        <!-- Business Model Overview -->
+        <div class="business-overview">
+            <h3>💼 DaaS Business Model</h3>
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-value">150+</div>
+                    <div class="stat-label">Enterprise Clients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌐</div>
+                    <div class="stat-value">25</div>
+                    <div class="stat-label">API Endpoints</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">$2.5M</div>
+                    <div class="stat-label">Monthly Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">API Uptime</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- API Marketplace -->
+        <div class="api-marketplace">
+            <h3>🛒 API Marketplace</h3>
+            <div class="api-categories">
+                <div class="category-tabs">
+                    <button class="tab-btn active" onclick="showCategory('traffic')">Traffic Data</button>
+                    <button class="tab-btn" onclick="showCategory('environment')">Environment</button>
+                    <button class="tab-btn" onclick="showCategory('energy')">Energy</button>
+                    <button class="tab-btn" onclick="showCategory('population')">Population</button>
+                </div>
+                
+                <!-- Traffic Data APIs -->
+                <div class="api-category" id="traffic-apis">
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <div class="api-header">
+                                <h4>Real-time Traffic Flow</h4>
+                                <span class="api-price">$0.05/call</span>
+                            </div>
+                            <p class="api-description">Live traffic flow data from 500+ intersections</p>
+                            <div class="api-metrics">
+                                <span class="metric">📊 1M+ calls/month</span>
+                                <span class="metric">⚡ <50ms latency</span>
+                            </div>
+                            <button class="api-btn" onclick="testAPI('traffic-flow')">Test API</button>
+                        </div>
+                        
+                        <div class="api-card">
+                            <div class="api-header">
+                                <h4>Parking Availability</h4>
+                                <span class="api-price">$0.03/call</span>
+                            </div>
+                            <p class="api-description">Real-time parking space availability data</p>
+                            <div class="api-metrics">
+                                <span class="metric">📊 500K+ calls/month</span>
+                                <span class="metric">⚡ <30ms latency</span>
+                            </div>
+                            <button class="api-btn" onclick="testAPI('parking')">Test API</button>
+                        </div>
+                        
+                        <div class="api-card">
+                            <div class="api-header">
+                                <h4>Public Transport</h4>
+                                <span class="api-price">$0.04/call</span>
+                            </div>
+                            <p class="api-description">Bus, metro, and tram real-time schedules</p>
+                            <div class="api-metrics">
+                                <span class="metric">📊 750K+ calls/month</span>
+                                <span class="metric">⚡ <40ms latency</span>
+                            </div>
+                            <button class="api-btn" onclick="testAPI('transport')">Test API</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Environment Data APIs -->
+                <div class="api-category" id="environment-apis" style="display: none;">
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <div class="api-header">
+                                <h4>Air Quality Index</h4>
+                                <span class="api-price">$0.02/call</span>
+                            </div>
+                            <p class="api-description">Real-time AQI data from 200+ sensors</p>
+                            <div class="api-metrics">
+                                <span class="metric">📊 2M+ calls/month</span>
+                                <span class="metric">⚡ <25ms latency</span>
+                            </div>
+                            <button class="api-btn" onclick="testAPI('air-quality')">Test API</button>
+                        </div>
+                        
+                        <div class="api-card">
+                            <div class="api-header">
+                                <h4>Weather & Climate</h4>
+                                <span class="api-price">$0.01/call</span>
+                            </div>
+                            <p class="api-description">Hyperlocal weather and climate data</p>
+                            <div class="api-metrics">
+                                <span class="metric">📊 3M+ calls/month</span>
+                                <span class="metric">⚡ <20ms latency</span>
+                            </div>
+                            <button class="api-btn" onclick="testAPI('weather')">Test API</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- API Testing Interface -->
+        <div class="api-testing" id="apiTesting" style="display: none;">
+            <h3>🧪 API Testing Console</h3>
+            <div class="testing-interface">
+                <div class="test-input">
+                    <div class="input-group">
+                        <label>API Endpoint:</label>
+                        <input type="text" id="apiEndpoint" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>Parameters:</label>
+                        <textarea id="apiParams" placeholder="Enter JSON parameters..."></textarea>
+                    </div>
+                    <button class="test-btn" onclick="executeAPITest()">🚀 Execute Test</button>
+                </div>
+                <div class="test-output">
+                    <h4>Response:</h4>
+                    <pre id="apiResponse">Click "Execute Test" to see API response...</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pricing Plans -->
+        <div class="pricing-plans">
+            <h3>💳 Pricing Plans</h3>
+            <div class="plans-grid">
+                <div class="plan-card starter">
+                    <h4>Starter</h4>
+                    <div class="plan-price">$99<span>/month</span></div>
+                    <ul class="plan-features">
+                        <li>✅ 10,000 API calls/month</li>
+                        <li>✅ Basic traffic data</li>
+                        <li>✅ Email support</li>
+                        <li>❌ Real-time alerts</li>
+                    </ul>
+                    <button class="plan-btn">Choose Plan</button>
+                </div>
+                
+                <div class="plan-card professional">
+                    <h4>Professional</h4>
+                    <div class="plan-price">$499<span>/month</span></div>
+                    <ul class="plan-features">
+                        <li>✅ 100,000 API calls/month</li>
+                        <li>✅ All data categories</li>
+                        <li>✅ Priority support</li>
+                        <li>✅ Real-time alerts</li>
+                    </ul>
+                    <button class="plan-btn popular">Most Popular</button>
+                </div>
+                
+                <div class="plan-card enterprise">
+                    <h4>Enterprise</h4>
+                    <div class="plan-price">Custom</div>
+                    <ul class="plan-features">
+                        <li>✅ Unlimited API calls</li>
+                        <li>✅ Custom integrations</li>
+                        <li>✅ Dedicated support</li>
+                        <li>✅ SLA guarantee</li>
+                    </ul>
+                    <button class="plan-btn">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Client Success Stories -->
+        <div class="client-stories">
+            <h3>🏆 Client Success Stories</h3>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="client-logo">🏛️</div>
+                    <h4>City Government</h4>
+                    <p>"Reduced traffic congestion by 35% using real-time traffic optimization APIs"</p>
+                    <div class="story-metrics">
+                        <span class="metric">35% ↓ Congestion</span>
+                        <span class="metric">$2M Saved</span>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="client-logo">🏢</div>
+                    <h4>Smart Building Corp</h4>
+                    <p>"Optimized energy consumption across 50 buildings using environmental data"</p>
+                    <div class="story-metrics">
+                        <span class="metric">25% ↓ Energy Use</span>
+                        <span class="metric">$500K Saved</span>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="client-logo">🚗</div>
+                    <h4>Mobility Solutions</h4>
+                    <p>"Improved ride-sharing efficiency by 40% with traffic and parking data"</p>
+                    <div class="story-metrics">
+                        <span class="metric">40% ↑ Efficiency</span>
+                        <span class="metric">1M+ Users</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCategory(category) {
+            // Hide all categories
+            const categories = document.querySelectorAll('.api-category');
+            categories.forEach(cat => cat.style.display = 'none');
+            
+            // Show selected category
+            document.getElementById(category + '-apis').style.display = 'block';
+            
+            // Update tab buttons
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function testAPI(apiType) {
+            const apiTesting = document.getElementById('apiTesting');
+            const apiEndpoint = document.getElementById('apiEndpoint');
+            const apiParams = document.getElementById('apiParams');
+            
+            apiTesting.style.display = 'block';
+            
+            // Set endpoint based on API type
+            const endpoints = {
+                'traffic-flow': 'https://api.solarpunkcity.com/v1/traffic/flow',
+                'parking': 'https://api.solarpunkcity.com/v1/parking/availability',
+                'transport': 'https://api.solarpunkcity.com/v1/transport/schedule',
+                'air-quality': 'https://api.solarpunkcity.com/v1/environment/air-quality',
+                'weather': 'https://api.solarpunkcity.com/v1/environment/weather'
+            };
+            
+            apiEndpoint.value = endpoints[apiType] || 'https://api.solarpunkcity.com/v1/data';
+            
+            // Set sample parameters
+            const sampleParams = {
+                'traffic-flow': '{\n  "location": "downtown",\n  "radius": 1000,\n  "format": "json"\n}',
+                'parking': '{\n  "zone": "central",\n  "type": "public",\n  "format": "json"\n}',
+                'transport': '{\n  "route": "metro-line-1",\n  "direction": "north",\n  "format": "json"\n}',
+                'air-quality': '{\n  "location": "city-center",\n  "pollutants": ["pm2.5", "no2"],\n  "format": "json"\n}',
+                'weather': '{\n  "location": "downtown",\n  "forecast": "current",\n  "format": "json"\n}'
+            };
+            
+            apiParams.value = sampleParams[apiType] || '{\n  "format": "json"\n}';
+            
+            // Scroll to testing interface
+            apiTesting.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function executeAPITest() {
+            const apiResponse = document.getElementById('apiResponse');
+            
+            // Show loading state
+            apiResponse.textContent = 'Loading...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                const sampleResponse = {
+                    "status": "success",
+                    "timestamp": new Date().toISOString(),
+                    "data": {
+                        "traffic_flow": 1250,
+                        "congestion_level": "moderate",
+                        "average_speed": 35.2,
+                        "incidents": 2,
+                        "prediction": {
+                            "next_hour": "increasing",
+                            "confidence": 0.87
+                        }
+                    },
+                    "metadata": {
+                        "api_version": "v1.2.0",
+                        "response_time": "45ms",
+                        "cost": "$0.05"
+                    }
+                };
+                
+                apiResponse.textContent = JSON.stringify(sampleResponse, null, 2);
+            }, 1500);
+        }
+        
+        // Auto-show traffic APIs and test one
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                testAPI('traffic-flow');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

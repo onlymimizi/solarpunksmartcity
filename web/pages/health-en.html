@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- High-tech background -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index-en.html" class="back-button">← Back to Home</a>
+        </div>
+        
+        <div class="page-header">
+            <h1 class="page-title">💚 Health Monitoring & Analysis</h1>
+            <p class="page-subtitle">AI-Powered Urban Environmental Health Assessment</p>
+        </div>
+        
+        <!-- Health Input Panel -->
+        <div class="health-input-panel">
+            <h3>Health Data Input</h3>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Resting Heart Rate (bpm):</label>
+                    <input type="number" id="heartRate" value="75" min="40" max="120">
+                </div>
+                <div class="input-group">
+                    <label>Sleep Hours (per night):</label>
+                    <input type="number" id="sleepHours" value="6.5" min="3" max="12" step="0.5">
+                </div>
+                <div class="input-group">
+                    <label>Daily Steps:</label>
+                    <input type="number" id="steps" value="8500" min="0" max="50000">
+                </div>
+                <div class="input-group">
+                    <label>Age:</label>
+                    <input type="number" id="age" value="28" min="18" max="100">
+                </div>
+                <div class="input-group">
+                    <label>Health Conditions:</label>
+                    <select id="conditions" multiple>
+                        <option value="none">None</option>
+                        <option value="anxiety" selected>Mild Anxiety</option>
+                        <option value="hypertension">Hypertension</option>
+                        <option value="diabetes">Diabetes</option>
+                        <option value="asthma">Asthma</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Air Quality Index:</label>
+                    <input type="number" id="airQuality" value="45" min="0" max="500">
+                </div>
+            </div>
+            <button class="analyze-btn" onclick="analyzeHealth()">🧠 Run AI Health Analysis</button>
+        </div>
+        
+        <!-- Results Display -->
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <h3>AI Health Analysis Results</h3>
+            
+            <!-- Health Score -->
+            <div class="health-score-container">
+                <div class="health-score-circle">
+                    <div class="score-value" id="healthScore">--</div>
+                    <div class="score-label">Health Score</div>
+                </div>
+                <div class="score-breakdown">
+                    <div class="score-item">
+                        <span class="score-category">Cardiovascular:</span>
+                        <span class="score-points" id="cardioScore">--</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-category">Sleep Quality:</span>
+                        <span class="score-points" id="sleepScore">--</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-category">Activity Level:</span>
+                        <span class="score-points" id="activityScore">--</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-category">Environmental:</span>
+                        <span class="score-points" id="envScore">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Health Metrics -->
+            <div class="health-metrics">
+                <div class="metric-card">
+                    <div class="metric-icon">❤️</div>
+                    <h4>Heart Health</h4>
+                    <div class="metric-value" id="heartHealth">--</div>
+                    <div class="metric-status" id="heartStatus">--</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">😴</div>
+                    <h4>Sleep Quality</h4>
+                    <div class="metric-value" id="sleepQuality">--</div>
+                    <div class="metric-status" id="sleepStatus">--</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🏃</div>
+                    <h4>Activity Level</h4>
+                    <div class="metric-value" id="activityLevel">--</div>
+                    <div class="metric-status" id="activityStatus">--</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🌬️</div>
+                    <h4>Air Quality Impact</h4>
+                    <div class="metric-value" id="airImpact">--</div>
+                    <div class="metric-status" id="airStatus">--</div>
+                </div>
+            </div>
+            
+            <!-- AI Recommendations -->
+            <div class="ai-recommendations">
+                <h4>🎯 AI Health Recommendations</h4>
+                <div class="recommendations-content" id="recommendationsContent">
+                    <!-- AI recommendations will be displayed here -->
+                </div>
+            </div>
+            
+            <!-- Environmental Factors -->
+            <div class="environmental-factors">
+                <h4>🌍 Environmental Health Factors</h4>
+                <div class="env-factors-grid" id="envFactorsGrid">
+                    <!-- Environmental factors will be displayed here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Health Features -->
+        <div class="health-features">
+            <h3>AI Health Monitoring Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Comprehensive Analysis</h4>
+                    <p>Multi-dimensional health assessment using AI algorithms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔮</div>
+                    <h4>Predictive Insights</h4>
+                    <p>Early warning system for potential health risks</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <h4>Environmental Integration</h4>
+                    <p>Correlation between environmental factors and health outcomes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>Personalized Recommendations</h4>
+                    <p>Tailored health advice based on individual data patterns</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeHealth() {
+            // Get input values
+            const heartRate = parseInt(document.getElementById('heartRate').value);
+            const sleepHours = parseFloat(document.getElementById('sleepHours').value);
+            const steps = parseInt(document.getElementById('steps').value);
+            const age = parseInt(document.getElementById('age').value);
+            const airQuality = parseInt(document.getElementById('airQuality').value);
+            
+            const conditionsSelect = document.getElementById('conditions');
+            const conditions = Array.from(conditionsSelect.selectedOptions).map(option => option.value);
+            
+            // Show loading state
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.style.display = 'block';
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                const results = runHealthAnalysis(heartRate, sleepHours, steps, age, airQuality, conditions);
+                displayHealthResults(results);
+                generateRecommendations(results);
+                displayEnvironmentalFactors(results);
+            }, 2000);
+        }
+        
+        function runHealthAnalysis(heartRate, sleepHours, steps, age, airQuality, conditions) {
+            // Calculate individual scores
+            const cardioScore = calculateCardioScore(heartRate, age);
+            const sleepScore = calculateSleepScore(sleepHours);
+            const activityScore = calculateActivityScore(steps, age);
+            const envScore = calculateEnvironmentalScore(airQuality);
+            
+            // Calculate overall health score
+            const baseScore = (cardioScore + sleepScore + activityScore + envScore) / 4;
+            const conditionPenalty = conditions.includes('none') ? 0 : conditions.length * 5;
+            const healthScore = Math.max(0, Math.round(baseScore - conditionPenalty));
+            
+            return {
+                healthScore,
+                cardioScore,
+                sleepScore,
+                activityScore,
+                envScore,
+                heartRate,
+                sleepHours,
+                steps,
+                age,
+                airQuality,
+                conditions
+            };
+        }
+        
+        function calculateCardioScore(heartRate, age) {
+            const maxHR = 220 - age;
+            const restingHRPercent = heartRate / maxHR;
+            
+            if (heartRate >= 60 && heartRate <= 80) return 95;
+            if (heartRate >= 50 && heartRate <= 90) return 85;
+            if (heartRate >= 40 && heartRate <= 100) return 70;
+            return 50;
+        }
+        
+        function calculateSleepScore(sleepHours) {
+            if (sleepHours >= 7 && sleepHours <= 9) return 95;
+            if (sleepHours >= 6 && sleepHours <= 10) return 80;
+            if (sleepHours >= 5 && sleepHours <= 11) return 65;
+            return 40;
+        }
+        
+        function calculateActivityScore(steps, age) {
+            const target = age < 65 ? 10000 : 7000;
+            const ratio = steps / target;
+            
+            if (ratio >= 1.2) return 95;
+            if (ratio >= 1.0) return 90;
+            if (ratio >= 0.8) return 75;
+            if (ratio >= 0.5) return 60;
+            return 40;
+        }
+        
+        function calculateEnvironmentalScore(airQuality) {
+            if (airQuality <= 50) return 95;
+            if (airQuality <= 100) return 80;
+            if (airQuality <= 150) return 65;
+            if (airQuality <= 200) return 45;
+            return 25;
+        }
+        
+        function displayHealthResults(results) {
+            document.getElementById('healthScore').textContent = results.healthScore;
+            document.getElementById('cardioScore').textContent = results.cardioScore + '/100';
+            document.getElementById('sleepScore').textContent = results.sleepScore + '/100';
+            document.getElementById('activityScore').textContent = results.activityScore + '/100';
+            document.getElementById('envScore').textContent = results.envScore + '/100';
+            
+            // Update metric cards
+            document.getElementById('heartHealth').textContent = getHealthStatus(results.cardioScore);
+            document.getElementById('heartStatus').textContent = getHeartRateStatus(results.heartRate);
+            
+            document.getElementById('sleepQuality').textContent = getHealthStatus(results.sleepScore);
+            document.getElementById('sleepStatus').textContent = getSleepStatus(results.sleepHours);
+            
+            document.getElementById('activityLevel').textContent = getHealthStatus(results.activityScore);
+            document.getElementById('activityStatus').textContent = getActivityStatus(results.steps);
+            
+            document.getElementById('airImpact').textContent = getHealthStatus(results.envScore);
+            document.getElementById('airStatus').textContent = getAirQualityStatus(results.airQuality);
+        }
+        
+        function getHealthStatus(score) {
+            if (score >= 90) return 'Excellent';
+            if (score >= 80) return 'Good';
+            if (score >= 70) return 'Fair';
+            if (score >= 60) return 'Poor';
+            return 'Critical';
+        }
+        
+        function getHeartRateStatus(hr) {
+            if (hr >= 60 && hr <= 80) return 'Optimal Range';
+            if (hr < 60) return 'Below Normal';
+            return 'Above Normal';
+        }
+        
+        function getSleepStatus(hours) {
+            if (hours >= 7 && hours <= 9) return 'Recommended Range';
+            if (hours < 7) return 'Insufficient Sleep';
+            return 'Excessive Sleep';
+        }
+        
+        function getActivityStatus(steps) {
+            if (steps >= 10000) return 'Very Active';
+            if (steps >= 7500) return 'Active';
+            if (steps >= 5000) return 'Moderately Active';
+            return 'Sedentary';
+        }
+        
+        function getAirQualityStatus(aqi) {
+            if (aqi <= 50) return 'Good';
+            if (aqi <= 100) return 'Moderate';
+            if (aqi <= 150) return 'Unhealthy for Sensitive';
+            return 'Unhealthy';
+        }
+        
+        function generateRecommendations(results) {
+            const recommendations = [];
+            
+            if (results.cardioScore < 80) {
+                recommendations.push('Consider cardiovascular exercises like walking or swimming');
+            }
+            if (results.sleepScore < 80) {
+                recommendations.push('Improve sleep hygiene and aim for 7-9 hours of sleep');
+            }
+            if (results.activityScore < 80) {
+                recommendations.push('Increase daily physical activity and aim for 10,000 steps');
+            }
+            if (results.envScore < 80) {
+                recommendations.push('Consider air purifiers and limit outdoor activities during high pollution');
+            }
+            if (results.conditions.includes('anxiety')) {
+                recommendations.push('Practice stress management techniques like meditation');
+            }
+            
+            const content = recommendations.map(rec => `<div class="recommendation-item">• ${rec}</div>`).join('');
+            document.getElementById('recommendationsContent').innerHTML = content;
+        }
+        
+        function displayEnvironmentalFactors(results) {
+            const factors = [
+                { name: 'Air Quality', value: results.airQuality, unit: 'AQI', status: getAirQualityStatus(results.airQuality) },
+                { name: 'Green Spaces', value: '85%', unit: 'coverage', status: 'Excellent' },
+                { name: 'Noise Level', value: '45', unit: 'dB', status: 'Acceptable' },
+                { name: 'UV Index', value: '6', unit: 'moderate', status: 'Moderate' }
+            ];
+            
+            const grid = document.getElementById('envFactorsGrid');
+            grid.innerHTML = factors.map(factor => `
+                <div class="env-factor-card">
+                    <h5>${factor.name}</h5>
+                    <div class="factor-value">${factor.value} ${factor.unit}</div>
+                    <div class="factor-status">${factor.status}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Auto-run demo with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                analyzeHealth();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Traffic Optimization - Solarpunk Smart City</title>
+    <link rel="stylesheet" href="../components/ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- High-tech background -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="floating-particles"></div>
+        <div class="scan-lines"></div>
+    </div>
+    
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="back-button-container">
+            <a href="./index-en.html" class="back-button">← Back to Home</a>
+        </div>
+        
+        <div class="page-header">
+            <h1 class="page-title">🚦 AI Traffic Optimization</h1>
+            <p class="page-subtitle">Intelligent Traffic Flow Analysis and Signal Optimization</p>
+        </div>
+        
+        <!-- Traffic Input Panel -->
+        <div class="traffic-input-panel">
+            <h3>Traffic Data Input</h3>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Number of Intersections:</label>
+                    <input type="number" id="intersections" value="3" min="1" max="10">
+                </div>
+                <div class="input-group">
+                    <label>Approaches per Intersection:</label>
+                    <input type="number" id="approaches" value="4" min="2" max="8">
+                </div>
+                <div class="input-group">
+                    <label>Traffic Demand (vehicles/hour):</label>
+                    <input type="text" id="demand" value="25,18,12,35" placeholder="e.g., 25,18,12,35">
+                </div>
+                <div class="input-group">
+                    <label>Peak Hour Factor:</label>
+                    <input type="number" id="peakFactor" value="0.85" min="0.1" max="1.0" step="0.01">
+                </div>
+            </div>
+            <button class="optimize-btn" onclick="optimizeTraffic()">🤖 Run AI Optimization</button>
+        </div>
+        
+        <!-- Results Display -->
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <h3>AI Optimization Results</h3>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-icon">⏱️</div>
+                    <h4>Optimal Cycle Time</h4>
+                    <div class="result-value" id="cycleTime">--</div>
+                    <div class="result-unit">seconds</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">🚥</div>
+                    <h4>Green Time Distribution</h4>
+                    <div class="result-value" id="greenTimes">--</div>
+                    <div class="result-unit">seconds each</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">📈</div>
+                    <h4>Efficiency Improvement</h4>
+                    <div class="result-value" id="efficiency">--</div>
+                    <div class="result-unit">% better</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">⏰</div>
+                    <h4>Average Delay</h4>
+                    <div class="result-value" id="avgDelay">--</div>
+                    <div class="result-unit">seconds</div>
+                </div>
+            </div>
+            
+            <!-- Traffic Flow Visualization -->
+            <div class="traffic-visualization">
+                <h4>Traffic Flow Visualization</h4>
+                <div class="intersection-diagram" id="intersectionDiagram">
+                    <!-- Dynamic intersection visualization will be generated here -->
+                </div>
+            </div>
+            
+            <!-- AI Analysis -->
+            <div class="ai-analysis">
+                <h4>🧠 AI Analysis Report</h4>
+                <div class="analysis-content" id="analysisContent">
+                    <!-- AI analysis will be displayed here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Algorithm Description -->
+        <div class="algorithm-description">
+            <h3>AI Algorithm Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧮</div>
+                    <h4>Webster's Method</h4>
+                    <p>Optimal cycle time calculation based on traffic demand patterns</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Real-time Analysis</h4>
+                    <p>Continuous monitoring and adjustment of signal timing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Adaptive Control</h4>
+                    <p>Dynamic response to changing traffic conditions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Multi-objective Optimization</h4>
+                    <p>Minimize delay while maximizing throughput and safety</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function optimizeTraffic() {
+            // Get input values
+            const intersections = parseInt(document.getElementById('intersections').value);
+            const approaches = parseInt(document.getElementById('approaches').value);
+            const demandStr = document.getElementById('demand').value;
+            const peakFactor = parseFloat(document.getElementById('peakFactor').value);
+            
+            // Parse demand array
+            const demand = demandStr.split(',').map(d => parseInt(d.trim()));
+            
+            // Show loading state
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.style.display = 'block';
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                // Run optimization algorithm
+                const results = runTrafficOptimization(intersections, approaches, demand, peakFactor);
+                displayResults(results);
+                generateVisualization(results);
+                generateAIAnalysis(results);
+            }, 1500);
+        }
+        
+        function runTrafficOptimization(intersections, approaches, demand, peakFactor) {
+            // Webster's Method for optimal cycle time
+            const saturationFlow = 1800; // vehicles per hour per lane
+            const lostTime = 4; // seconds per phase
+            const totalLostTime = approaches * lostTime;
+            
+            // Calculate critical flow ratios
+            const flowRatios = demand.map(d => (d * peakFactor) / saturationFlow);
+            const criticalRatio = Math.max(...flowRatios);
+            
+            // Optimal cycle time using Webster's formula
+            const optimalCycle = Math.round((1.5 * totalLostTime + 5) / (1 - criticalRatio));
+            
+            // Calculate green times
+            const effectiveGreen = optimalCycle - totalLostTime;
+            const greenTimes = flowRatios.map(ratio => 
+                Math.round((ratio / criticalRatio) * effectiveGreen)
+            );
+            
+            // Calculate performance metrics
+            const avgDelay = calculateAverageDelay(optimalCycle, greenTimes, demand, peakFactor);
+            const efficiency = Math.round((1 - criticalRatio) * 100);
+            
+            return {
+                cycleTime: optimalCycle,
+                greenTimes: greenTimes,
+                efficiency: efficiency,
+                avgDelay: avgDelay,
+                demand: demand,
+                intersections: intersections,
+                approaches: approaches
+            };
+        }
+        
+        function calculateAverageDelay(cycle, greenTimes, demand, peakFactor) {
+            // Simplified delay calculation using Webster's delay formula
+            const delays = demand.map((d, i) => {
+                const arrivalRate = (d * peakFactor) / 3600; // vehicles per second
+                const serviceRate = 1800 / 3600; // vehicles per second
+                const greenRatio = greenTimes[i] / cycle;
+                
+                // Webster's delay formula (simplified)
+                const uniformDelay = (cycle * (1 - greenRatio) ** 2) / (2 * (1 - greenRatio * arrivalRate / serviceRate));
+                return Math.max(uniformDelay, 5); // minimum 5 seconds
+            });
+            
+            return Math.round(delays.reduce((a, b) => a + b, 0) / delays.length);
+        }
+        
+        function displayResults(results) {
+            document.getElementById('cycleTime').textContent = results.cycleTime;
+            document.getElementById('greenTimes').textContent = results.greenTimes.join(', ');
+            document.getElementById('efficiency').textContent = results.efficiency;
+            document.getElementById('avgDelay').textContent = results.avgDelay;
+        }
+        
+        function generateVisualization(results) {
+            const diagram = document.getElementById('intersectionDiagram');
+            diagram.innerHTML = '';
+            
+            // Create intersection visualization
+            const intersection = document.createElement('div');
+            intersection.className = 'intersection-visual';
+            intersection.innerHTML = `
+                <div class="intersection-center">
+                    <div class="traffic-light north" style="--delay: 0s">🚥</div>
+                    <div class="traffic-light east" style="--delay: ${results.greenTimes[0]}s">🚥</div>
+                    <div class="traffic-light south" style="--delay: ${results.greenTimes[0] + results.greenTimes[1]}s">🚥</div>
+                    <div class="traffic-light west" style="--delay: ${results.greenTimes[0] + results.greenTimes[1] + results.greenTimes[2]}s">🚥</div>
+                </div>
+                <div class="traffic-flows">
+                    ${results.demand.map((d, i) => `
+                        <div class="flow-indicator flow-${i}">
+                            <span class="flow-value">${d}</span>
+                            <span class="flow-label">veh/h</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            diagram.appendChild(intersection);
+        }
+        
+        function generateAIAnalysis(results) {
+            const analysis = document.getElementById('analysisContent');
+            
+            const analysisText = `
+                <div class="analysis-section">
+                    <h5>🎯 Optimization Summary</h5>
+                    <p>The AI algorithm has analyzed ${results.intersections} intersections with ${results.approaches} approaches each. 
+                    The optimal cycle time of ${results.cycleTime} seconds provides ${results.efficiency}% efficiency improvement.</p>
+                </div>
+                
+                <div class="analysis-section">
+                    <h5>📊 Traffic Pattern Analysis</h5>
+                    <p>Peak demand detected on approach ${results.demand.indexOf(Math.max(...results.demand)) + 1} 
+                    with ${Math.max(...results.demand)} vehicles/hour. Green time allocation has been optimized accordingly.</p>
+                </div>
+                
+                <div class="analysis-section">
+                    <h5>💡 Recommendations</h5>
+                    <ul>
+                        <li>Implement adaptive signal control for real-time adjustments</li>
+                        <li>Consider pedestrian crossing integration</li>
+                        <li>Monitor performance during different time periods</li>
+                        <li>Integrate with connected vehicle systems for enhanced efficiency</li>
+                    </ul>
+                </div>
+            `;
+            
+            analysis.innerHTML = analysisText;
+        }
+        
+        // Auto-run demo with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-optimize after 2 seconds for demo purposes
+            setTimeout(() => {
+                optimizeTraffic();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
